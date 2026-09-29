@@ -1,0 +1,81 @@
+:root {
+  --deep-navy: #04122b;
+  --navy: #0a2a5e;
+  --royal: #1273c4;
+  --brand: #1e9bd7;
+  --cyan: #2bb7ec;
+  --sky: #57c9f2;
+  --ice: #a9e4fb;
+  --white: #ffffff;
+
+  --sans: 'Poppins', system-ui, sans-serif;
+  --display: 'Sora', 'Poppins', system-ui, sans-serif;
+
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #04122b;
+  color: var(--white);
+  font-family: var(--sans);
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--cyan);
+  color: var(--deep-navy);
+}
+
+/* ---- Animated brand gradient behind the 3D canvas ---- */
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  /* matches the in-scene studio backdrop, so there is no dark flash before the first frame */
+  background:
+    radial-gradient(70% 60% at 72% 42%, #eef9ff 0%, rgba(166, 220, 246, 0.9) 30%, rgba(26, 115, 170, 0) 72%),
+    linear-gradient(180deg, #0a4675 0%, #1a73aa 55%, #3f95c7 100%);
+  background-color: #1a73aa;
+}
+.bg-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 40%, rgba(87, 201, 242, 0.12) 0%, rgba(87, 201, 242, 0) 70%);
+  animation: pulseGlow 9s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+.canvas-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Loading screen styles live in ui/loader.css */

@@ -1,0 +1,209 @@
+/* ============ Intro loader ============ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.loader--exit {
+  pointer-events: none;
+}
+
+/* the curtain: studio gradient with a wavy bottom edge, lifted away on exit */
+.loader__panel {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 60% at 50% 42%, #eef9ff 0%, rgba(166, 220, 246, 0.85) 32%, rgba(26, 115, 170, 0) 75%),
+    linear-gradient(180deg, #0a4675 0%, #1a73aa 60%, #3f95c7 100%);
+  background-color: #1a73aa;
+  transition: transform 1.25s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.loader__edge {
+  position: absolute;
+  left: -5%;
+  top: 100%;
+  width: 110%;
+  height: 110px;
+  fill: #3f95c7;
+  animation: edgeSway 2.4s ease-in-out infinite alternate;
+}
+@keyframes edgeSway {
+  from { transform: translateX(-2%); }
+  to { transform: translateX(2%); }
+}
+.loader--exit .loader__panel {
+  transform: translateY(calc(-100% - 120px));
+}
+
+.loader__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: transform 0.9s cubic-bezier(0.6, 0, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
+}
+.loader--exit .loader__content {
+  transform: translateY(-60px) scale(1.06);
+  opacity: 0;
+  filter: blur(6px);
+}
+
+/* ---- the droplet ---- */
+.loader__stage {
+  position: relative;
+  width: 120px;
+  height: 150px;
+  margin-bottom: 10px;
+  animation: dropFloat 3.2s ease-in-out infinite;
+}
+@keyframes dropFloat {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+.loader__drop {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 14px 26px rgba(6, 50, 100, 0.35));
+  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), filter 0.5s ease;
+}
+.loader--full .loader__drop {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 28px rgba(169, 228, 251, 0.95)) drop-shadow(0 14px 26px rgba(6, 50, 100, 0.35));
+}
+.loader__rim {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 2.2;
+}
+.loader__shine {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.75);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.loader__wave {
+  animation: waveSlide 1.9s linear infinite;
+}
+.loader__wave--back {
+  fill: rgba(169, 228, 251, 0.75);
+  animation: waveSlideBack 2.8s linear infinite reverse;
+}
+@keyframes waveSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(60px); }
+}
+@keyframes waveSlideBack {
+  from { transform: translate(0, -3px); }
+  to { transform: translate(60px, -3px); }
+}
+.loader__bubble {
+  fill: rgba(255, 255, 255, 0.8);
+  animation: bubbleRise 2.8s ease-in infinite;
+  opacity: 0;
+}
+@keyframes bubbleRise {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-112px); opacity: 0; }
+}
+
+/* a drip falls into the drop and rings the surface */
+.loader__drip {
+  position: absolute;
+  left: 50%;
+  top: -46px;
+  width: 9px;
+  height: 12px;
+  margin-left: -4.5px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: linear-gradient(180deg, #ffffff, #8fdcfb);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: drip 1.8s cubic-bezier(0.55, 0, 1, 0.45) infinite;
+}
+@keyframes drip {
+  0% { transform: translateY(0) scaleY(0.6); opacity: 0; }
+  12% { opacity: 1; transform: translateY(0) scaleY(1); }
+  55% { transform: translateY(70px) scaleY(1.25); opacity: 1; }
+  62%, 100% { transform: translateY(78px) scaleY(1); opacity: 0; }
+}
+.loader__ripple {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ripple 1.8s ease-out infinite;
+}
+@keyframes ripple {
+  0%, 58% { transform: scale(0.1); opacity: 0; }
+  62% { opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ---- type ---- */
+.loader__pct {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+  color: #0a2a5e;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+}
+.loader__pct span {
+  font-size: 16px;
+  margin-left: 3px;
+  opacity: 0.6;
+}
+.loader__word {
+  display: flex;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(20px, 3.4vw, 28px);
+  letter-spacing: 6px;
+  color: #ffffff;
+  text-shadow: 0 2px 14px rgba(3, 30, 62, 0.45);
+}
+.loader__word span {
+  display: inline-block;
+  opacity: 0;
+  animation: letterRise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes letterRise {
+  from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.loader__tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: #0a2a5e;
+  opacity: 0;
+  animation: tagIn 1s ease 1s forwards;
+}
+@keyframes tagIn {
+  to { opacity: 0.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader__stage,
+  .loader__wave,
+  .loader__bubble,
+  .loader__drip,
+  .loader__ripple,
+  .loader__edge {
+    animation: none;
+  }
+  .loader__word span,
+  .loader__tag {
+    animation: none;
+    opacity: 1;
+  }
+}

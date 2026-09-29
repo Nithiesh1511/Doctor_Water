@@ -1,0 +1,913 @@
+/* ============ Fixed chrome (nav + social + scroll hint) ============ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px clamp(18px, 4vw, 54px);
+  pointer-events: none;
+}
+.nav a,
+.nav button {
+  pointer-events: auto;
+}
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.nav__logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50% 50% 50% 4px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--sky), var(--royal));
+  box-shadow: 0 6px 18px rgba(30, 155, 215, 0.5);
+}
+.nav__name span {
+  display: block;
+  line-height: 1;
+}
+.nav__name b {
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+.nav__name i {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--sky);
+}
+.nav__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--white);
+  border: 1px solid rgba(169, 228, 251, 0.35);
+  background: rgba(10, 42, 94, 0.35);
+  backdrop-filter: blur(10px);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+.nav__cta:hover {
+  transform: translateY(-2px);
+  background: rgba(43, 183, 236, 0.22);
+  border-color: var(--sky);
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ice);
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+}
+.scroll-hint.gone {
+  opacity: 0;
+}
+.scroll-hint__mouse {
+  width: 22px;
+  height: 36px;
+  border: 2px solid rgba(169, 228, 251, 0.6);
+  border-radius: 12px;
+  position: relative;
+}
+.scroll-hint__mouse::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 3px;
+  height: 7px;
+  border-radius: 3px;
+  background: var(--sky);
+  transform: translateX(-50%);
+  animation: wheel 1.5s ease-in-out infinite;
+}
+@keyframes wheel {
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
+
+/* progress rail on the right edge */
+.progress-rail {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 3px;
+  height: 180px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.progress-rail span {
+  display: block;
+  width: 100%;
+  background: linear-gradient(180deg, var(--sky), var(--royal));
+  border-radius: 3px;
+}
+
+/* ============ Scrolling content sections ============ */
+.sections {
+  width: 100%;
+}
+.section {
+  width: 100%;
+  height: var(--app-h, 100vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(20px, 7vw, 120px);
+}
+.section--center {
+  align-items: center;
+  text-align: center;
+}
+.section--right {
+  align-items: flex-end;
+  text-align: right;
+}
+.section--left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--sky);
+  margin-bottom: 18px;
+}
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--sky);
+  opacity: 0.7;
+}
+
+.hero__word {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 0.9;
+  margin: 0;
+  letter-spacing: 1px;
+}
+.hero__word--top {
+  font-size: clamp(44px, 9vw, 130px);
+  color: var(--white);
+  text-shadow: 0 10px 50px rgba(4, 18, 43, 0.6);
+}
+.hero__word--bottom {
+  font-size: clamp(56px, 12vw, 180px);
+  background: linear-gradient(180deg, var(--sky) 0%, var(--royal) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__tagline {
+  margin-top: 22px;
+  font-size: clamp(15px, 2.2vw, 22px);
+  font-weight: 300;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--ice);
+}
+
+h2.section__title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 5vw, 62px);
+  line-height: 1.02;
+  margin: 0 0 20px;
+}
+.section__title .accent {
+  background: linear-gradient(120deg, var(--sky), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.section__text {
+  max-width: 460px;
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(233, 246, 255, 0.82);
+}
+.section--right .section__text {
+  margin-left: auto;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+.section--right .pill-row {
+  justify-content: flex-end;
+}
+.section--center .pill-row {
+  justify-content: center;
+}
+.pill {
+  padding: 9px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--white);
+  background: rgba(10, 42, 94, 0.4);
+  border: 1px solid rgba(87, 201, 242, 0.3);
+  backdrop-filter: blur(8px);
+}
+.pill b {
+  color: var(--sky);
+}
+
+/* stat grid */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+  width: min(520px, 90vw);
+}
+.stat {
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(6, 26, 58, 0.5);
+  border: 1px solid rgba(87, 201, 242, 0.22);
+  backdrop-filter: blur(12px);
+  text-align: left;
+}
+.stat__num {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  white-space: nowrap;
+  background: linear-gradient(120deg, var(--sky), var(--royal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat__label {
+  margin-top: 6px;
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+  color: rgba(233, 246, 255, 0.7);
+}
+
+/* footer / contact card */
+.contact-card {
+  width: min(560px, 92vw);
+  padding: 34px;
+  border-radius: 26px;
+  background: rgba(6, 26, 58, 0.62);
+  border: 1px solid rgba(87, 201, 242, 0.28);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 30px 80px rgba(2, 10, 26, 0.55);
+  text-align: left;
+}
+.contact-card h3 {
+  font-family: var(--display);
+  font-size: 24px;
+  margin: 0 0 6px;
+}
+.contact-card .muted {
+  font-size: 13px;
+  color: var(--sky);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.contact-row {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(233, 246, 255, 0.9);
+}
+.contact-row .k {
+  min-width: 90px;
+  color: var(--sky);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 22px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.btn--primary {
+  background: linear-gradient(120deg, var(--brand), var(--royal));
+  color: var(--white);
+  box-shadow: 0 14px 34px rgba(18, 115, 196, 0.45);
+}
+.btn--ghost {
+  border: 1px solid rgba(169, 228, 251, 0.4);
+  color: var(--white);
+  background: rgba(10, 42, 94, 0.3);
+}
+.btn:hover {
+  transform: translateY(-3px);
+}
+.footnote {
+  margin-top: 26px;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  color: rgba(169, 228, 251, 0.55);
+  text-align: center;
+}
+
+.note-list {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: grid;
+  gap: 10px;
+  max-width: 440px;
+}
+.section--right .note-list {
+  margin-left: auto;
+}
+.note-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(233, 246, 255, 0.82);
+}
+.note-list li::before {
+  content: '';
+  margin-top: 7px;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sky);
+  box-shadow: 0 0 10px var(--sky);
+}
+
+/* Stacked layout (portrait: phones, tablets) - the same switch the 3D scene uses
+   (aspect < 0.85), so copy and scene always agree on where things go */
+@media (max-aspect-ratio: 17/20) {
+  .section {
+    padding: 0 24px;
+  }
+  .section--right,
+  .section--left {
+    align-items: center;
+    text-align: center;
+  }
+  .section--right .section__text,
+  .section--right .note-list {
+    margin: 22px auto 0;
+  }
+  .section--right .pill-row {
+    justify-content: center;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .progress-rail {
+    display: none;
+  }
+}
+@media (max-width: 720px) {
+  .nav__cta span.hide-sm {
+    display: none;
+  }
+}
+
+/* hero copy waits behind the loader, then rises in (in step with the can dropping in) */
+.section--hero > * {
+  opacity: 0;
+}
+body.is-revealed .section--hero > * {
+  animation: heroIn 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+body.is-revealed .section--hero > :nth-child(1) { animation-delay: 0.35s; }
+body.is-revealed .section--hero > :nth-child(2) { animation-delay: 0.5s; }
+body.is-revealed .section--hero > :nth-child(3) { animation-delay: 0.65s; }
+body.is-revealed .section--hero > :nth-child(4) { animation-delay: 0.95s; }
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(34px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section--hero > *,
+  body.is-revealed .section--hero > * {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* ============ Can → macro → jar story ============ */
+.section--hero .hero__word--top {
+  font-size: clamp(44px, 7.5vw, 116px);
+}
+.section--hero .hero__word--bottom {
+  font-size: clamp(56px, 10vw, 160px);
+}
+.section__title,
+.section__text,
+.hero__tagline {
+  text-shadow: 0 2px 22px rgba(3, 30, 62, 0.55), 0 1px 3px rgba(3, 30, 62, 0.35);
+}
+
+/* bright studio backdrop: lift the small type and accents to white/ice for contrast */
+.eyebrow,
+.nav__name i {
+  color: #eaf8ff;
+  text-shadow: 0 1px 10px rgba(3, 30, 62, 0.5);
+}
+.eyebrow::before {
+  background: #eaf8ff;
+}
+.section__title .accent {
+  background: linear-gradient(120deg, #ffffff 10%, #b9ebff 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* a text-shadow would show through the clipped glyphs and grey them out */
+  text-shadow: none;
+  white-space: nowrap; /* keep '20 LTR can.' etc. together */
+  filter: drop-shadow(0 2px 14px rgba(3, 30, 62, 0.45));
+}
+.section__text,
+.note-list li {
+  color: rgba(255, 255, 255, 0.94);
+}
+.hero__tagline {
+  color: #ffffff;
+}
+.hero__word--bottom {
+  background: linear-gradient(180deg, #ffffff 0%, #a9e4fb 55%, #57c9f2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 6px 24px rgba(3, 30, 62, 0.45));
+}
+.section--macro .section__title {
+  font-size: clamp(34px, 5.6vw, 72px);
+}
+.section--right .stats {
+  margin-left: auto;
+}
+
+@media (max-aspect-ratio: 17/20) {
+  .section {
+    justify-content: flex-start;
+    padding-top: clamp(96px, 13vh, 150px);
+  }
+  .section--left {
+    align-items: center;
+    text-align: center;
+  }
+  .section--left .section__text {
+    margin: 0 auto;
+  }
+  .section--right .stats {
+    margin: 30px auto 0;
+  }
+  .section:last-child {
+    justify-content: center;
+    padding-top: 0;
+  }
+}
+
+/* ================= Legibility over the bright water =================
+   Small, light type can't rely on the backdrop being dark, so it sits on frosted navy glass
+   (the same material as the stat cards) instead of straight on the scene. */
+.eyebrow,
+.hero__tagline,
+.scroll-hint span,
+.section__text,
+.note-list,
+.nav__brand {
+  background: rgba(6, 38, 76, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(12px) saturate(1.25);
+  backdrop-filter: blur(12px) saturate(1.25);
+  box-shadow: 0 8px 26px rgba(3, 24, 52, 0.22);
+  text-shadow: none;
+}
+/* chips */
+.eyebrow {
+  width: fit-content;
+  padding: 7px 14px 7px 12px;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #ffffff;
+}
+.eyebrow::before {
+  width: 16px;
+  opacity: 0.8;
+}
+.hero__tagline {
+  width: fit-content;
+  padding: 9px 20px;
+  border-radius: 100px;
+  font-weight: 500;
+  letter-spacing: 6px;
+}
+.scroll-hint span {
+  padding: 5px 12px;
+  border-radius: 100px;
+  color: #ffffff;
+  font-weight: 600;
+}
+.nav__brand {
+  padding: 6px 16px 6px 8px;
+  border-radius: 100px;
+}
+.nav__name i {
+  color: #bfeaff;
+  text-shadow: none;
+}
+/* frosted panels behind body copy */
+.section__text,
+.note-list {
+  width: fit-content;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.note-list li {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+/* ================= Responsive ================= */
+
+/* Side-by-side layouts (tablet landscape → desktop): keep each copy column to its half of the
+   screen so it never runs over the can / bottle on the other side. */
+@media (min-aspect-ratio: 17/20) {
+  .section--left > *,
+  .section--right > * {
+    max-width: min(640px, 54%);
+  }
+  .section--right .stats,
+  .section--right .contact-card {
+    max-width: none;
+    width: min(520px, 50vw);
+  }
+}
+
+/* Tablets and small laptops */
+@media (min-width: 721px) and (max-width: 1100px) {
+  .section {
+    padding-left: clamp(24px, 5vw, 60px);
+    padding-right: clamp(24px, 5vw, 60px);
+  }
+  h2.section__title {
+    font-size: clamp(30px, 4.6vw, 48px);
+  }
+  .section--hero .hero__word--top {
+    font-size: clamp(44px, 8vw, 88px);
+  }
+  .section--hero .hero__word--bottom {
+    font-size: clamp(56px, 10.5vw, 120px);
+  }
+  .stat {
+    padding: 18px;
+  }
+  .stat__num {
+    font-size: 26px;
+  }
+  .contact-card {
+    padding: 28px;
+  }
+}
+
+/* Big screens: let the type breathe a little more */
+@media (min-width: 1800px) {
+  .section {
+    padding-left: clamp(120px, 9vw, 220px);
+    padding-right: clamp(120px, 9vw, 220px);
+  }
+  .section--hero .hero__word--top {
+    font-size: clamp(116px, 6.6vw, 150px);
+  }
+  .section--hero .hero__word--bottom {
+    font-size: clamp(160px, 8.8vw, 200px);
+  }
+  h2.section__title {
+    font-size: clamp(62px, 3.6vw, 78px);
+  }
+  .section__text {
+    max-width: 540px;
+    font-size: 19px;
+  }
+}
+
+/* Phones (portrait): copy at the top, the scene below - a soft scrim keeps the copy legible
+   over the water */
+@media (max-aspect-ratio: 17/20) {
+  /* (fades out fully inside the section, so there is never a hard edge at a section boundary) */
+  .section:not(.section--hero):not(.section--spacer):not(:last-child) {
+    background: radial-gradient(90% 26% at 50% 28%, rgba(4, 32, 64, 0.34) 0%, rgba(4, 32, 64, 0) 100%);
+  }
+}
+@media (max-width: 720px) {
+  .nav {
+    padding: 16px 18px;
+  }
+  .nav__logo {
+    width: 28px;
+    height: 28px;
+  }
+  .nav__cta {
+    padding: 9px 12px;
+  }
+  .stats {
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .stat {
+    padding: 14px;
+    border-radius: 14px;
+  }
+  .stat__num {
+    font-size: 22px;
+  }
+  .stat__label {
+    font-size: 11.5px;
+  }
+  .contact-card {
+    padding: 22px 20px;
+    border-radius: 20px;
+  }
+  .contact-row {
+    padding: 10px 0;
+    font-size: 13.5px;
+  }
+  .contact-row .k {
+    min-width: 78px;
+  }
+  .btn {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+  .note-list li {
+    text-align: left;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .nav__name b {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  .nav__name i {
+    font-size: 9px;
+    letter-spacing: 3px;
+  }
+  .section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .section--hero .hero__word--top {
+    font-size: 40px;
+  }
+  .section--hero .hero__word--bottom {
+    font-size: 52px;
+  }
+  .hero__tagline {
+    letter-spacing: 5px;
+  }
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    padding: 6px 12px;
+  }
+  .hero__tagline {
+    padding: 7px 14px;
+    letter-spacing: 4px;
+  }
+  .section__text,
+  .note-list {
+    padding: 12px 14px;
+  }
+  .eyebrow::before {
+    display: none;
+  }
+  h2.section__title {
+    font-size: 28px;
+  }
+  .contact-row .k {
+    min-width: 66px;
+  }
+  .contact-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}
+
+/* Short portrait phones (e.g. 320×568, 375×667): the contact card must fit under the nav */
+@media (max-aspect-ratio: 17/20) and (max-height: 720px) {
+  .section:last-child {
+    padding-top: 58px;
+  }
+  .section:last-child .eyebrow {
+    margin-bottom: 8px;
+  }
+  .contact-card {
+    padding: 16px 16px 18px;
+  }
+  .contact-card h3 {
+    font-size: 19px;
+    margin: 0;
+  }
+  .contact-card .muted {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+  .contact-row {
+    padding: 7px 0;
+    gap: 10px;
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+  .contact-actions {
+    margin-top: 12px;
+    gap: 8px;
+  }
+  .contact-actions .btn {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .footnote {
+    display: none;
+  }
+}
+
+/* Short landscape screens (phones on their side, small laptop windows): everything has to fit
+   in a few hundred pixels of height */
+@media (max-height: 560px) and (orientation: landscape) {
+  .nav {
+    padding: 10px clamp(16px, 3vw, 40px);
+  }
+  .scroll-hint,
+  .progress-rail,
+  .footnote {
+    display: none;
+  }
+  .section {
+    justify-content: center;
+    padding-top: 44px;
+    padding-bottom: 8px;
+  }
+  .section--left,
+  .section--right {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .section--right {
+    align-items: flex-end;
+    text-align: right;
+  }
+  .section--left > *,
+  .section--right > * {
+    max-width: 56%;
+  }
+  .section--right .section__text,
+  .section--right .note-list {
+    margin: 0 0 0 auto;
+  }
+  .section--right .pill-row {
+    justify-content: flex-end;
+  }
+  .section--left .section__text {
+    margin: 0;
+  }
+  .eyebrow {
+    margin-bottom: 8px;
+    font-size: 10px;
+    padding: 5px 11px;
+  }
+  .hero__tagline {
+    padding: 6px 14px;
+  }
+  .section__text,
+  .note-list {
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
+  .section--hero .hero__word--top {
+    font-size: clamp(30px, 11vh, 64px);
+  }
+  .section--hero .hero__word--bottom {
+    font-size: clamp(38px, 15vh, 86px);
+  }
+  .hero__tagline {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  h2.section__title {
+    font-size: clamp(22px, 8vh, 40px);
+    margin-bottom: 10px;
+  }
+  .section__text {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .pill-row {
+    margin-top: 12px;
+  }
+  .pill {
+    padding: 6px 12px;
+    font-size: 11.5px;
+  }
+  .note-list {
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .note-list li {
+    font-size: 12.5px;
+  }
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+    width: min(620px, 54vw);
+  }
+  .stat {
+    padding: 10px 12px;
+  }
+  .stat__num {
+    font-size: clamp(14px, 2.2vw, 18px);
+  }
+  .stat__label {
+    font-size: 10.5px;
+  }
+  .contact-card {
+    padding: 14px 18px;
+    width: min(560px, 56vw);
+  }
+  .contact-card h3 {
+    font-size: 18px;
+    margin: 0;
+  }
+  .contact-card .muted {
+    margin-bottom: 6px;
+  }
+  .contact-row {
+    padding: 5px 0;
+    font-size: 12px;
+  }
+  .contact-actions {
+    margin-top: 10px;
+  }
+  .btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}

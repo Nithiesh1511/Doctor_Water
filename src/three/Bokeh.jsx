@@ -75,7 +75,8 @@ export default function Bokeh({ focus = [0, 0, 0] }) {
             // soft disc with a faint brighter rim, like real lens bokeh
             float disc = smoothstep(1.0, 0.6, d);
             float rim = 0.75 + 0.25 * smoothstep(0.35, 0.85, d);
-            gl_FragColor = vec4(vec3(0.35, 0.8, 1.0) * disc * rim * vAlpha, 1.0);
+            // champagne-gold dust drifting through the dark studio
+            gl_FragColor = vec4(vec3(1.0, 0.8, 0.46) * disc * rim * vAlpha, 1.0);
           }
         `,
       }),

@@ -25,7 +25,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #04122b;
+  background: #02060d;
   color: var(--white);
   font-family: var(--sans);
   overflow: hidden;
@@ -55,9 +55,9 @@ a {
   z-index: 0;
   /* matches the in-scene studio backdrop, so there is no dark flash before the first frame */
   background:
-    radial-gradient(70% 60% at 72% 42%, #eef9ff 0%, rgba(166, 220, 246, 0.9) 30%, rgba(26, 115, 170, 0) 72%),
-    linear-gradient(180deg, #0a4675 0%, #1a73aa 55%, #3f95c7 100%);
-  background-color: #1a73aa;
+    radial-gradient(55% 50% at 70% 44%, rgba(42, 110, 158, 0.5) 0%, rgba(7, 22, 41, 0) 70%),
+    linear-gradient(180deg, #010307 0%, #04101f 55%, #071629 100%);
+  background-color: #02060d;
 }
 .bg-gradient::after {
   content: '';

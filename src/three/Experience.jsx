@@ -400,6 +400,9 @@ export default function Experience({ railRef, hintRef }) {
         <Lightformer intensity={3} position={[0, 4, 3]} scale={[8, 3, 1]} color="#ffffff" />
         <Lightformer intensity={5} position={[3, 0, 3]} rotation-y={-Math.PI / 4} scale={[0.4, 8, 1]} color="#ffffff" />
         <Lightformer intensity={3.5} position={[-3, 0, 3]} rotation-y={Math.PI / 4} scale={[0.25, 8, 1]} color="#e6f7ff" />
+        {/* warm champagne rims: the luxury edge glow on the glass and water */}
+        <Lightformer intensity={3} position={[-4, 1, -1]} rotation-y={Math.PI / 2.4} scale={[0.35, 7, 1]} color="#f0c878" />
+        <Lightformer intensity={2} position={[4, 1.5, -1.5]} rotation-y={-Math.PI / 2.4} scale={[0.25, 6, 1]} color="#e9bf73" />
         <Lightformer form="ring" intensity={3} position={[0, 2, 5]} scale={1.4} color="#ffffff" />
       </Environment>
 

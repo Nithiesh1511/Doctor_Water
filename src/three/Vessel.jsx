@@ -5,7 +5,7 @@ import { MeshTransmissionMaterial } from '@react-three/drei';
 import { BOTTLE, bottleLathePoints, bottleRadiusAt, bottleInnerRadiusAt, bottleWaterPoints } from './profiles';
 import { makeLabelTexture } from './labelTexture';
 import { hideFromRefraction, registerRefractionBuffer } from './refraction';
-import { WATER_MATERIAL } from './physics';
+import { BEAD_MATERIAL } from './physics';
 
 const BEADS = 150;
 const TRICKLES = 10;
@@ -206,7 +206,7 @@ const Vessel = forwardRef(function Vessel({ shared }, ref) {
       {/* water beads */}
       <instancedMesh ref={beadsRef} args={[undefined, undefined, BEADS]} visible={false} frustumCulled={false}>
         <sphereGeometry args={[1, 14, 10]} />
-        <meshPhysicalMaterial {...WATER_MATERIAL} thickness={0.03} />
+        <meshPhysicalMaterial {...BEAD_MATERIAL} />
       </instancedMesh>
     </group>
   );

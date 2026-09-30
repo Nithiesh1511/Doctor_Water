@@ -1,11 +1,14 @@
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 
 export default function Effects() {
   return (
     <EffectComposer disableNormalPass multisampling={0}>
-      {/* only the hottest glints bloom, so the bright studio backdrop stays crisp */}
-      <Bloom intensity={0.45} luminanceThreshold={0.9} luminanceSmoothing={0.15} mipmapBlur radius={0.6} />
-      <Vignette eskil={false} offset={0.28} darkness={0.6} />
+      {/* highlights glow softly against the dark studio */}
+      <Bloom intensity={0.62} luminanceThreshold={0.82} luminanceSmoothing={0.2} mipmapBlur radius={0.65} />
+      {/* a whisper of film grain: the cinematic, printed-ad finish */}
+      <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.35} />
+      <Vignette eskil={false} offset={0.24} darkness={0.78} />
     </EffectComposer>
   );
 }

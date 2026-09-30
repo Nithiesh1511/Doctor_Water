@@ -41,7 +41,7 @@ export default function WaterFloor({ shared }) {
           textureMatrix: { value: new THREE.Matrix4() },
           uCam: { value: new THREE.Vector3() },
           uRip: { value: ripples },
-          uWater: { value: new THREE.Color('#0b4f7e') },
+          uWater: { value: new THREE.Color('#020912') }, // black-mirror pool
           uSun: { value: new THREE.Vector3(0.3, 0.6, -1).normalize() },
         },
         vertexShader: /* glsl */ `
@@ -93,7 +93,9 @@ export default function WaterFloor({ shared }) {
             float fres = 0.02 + 0.98 * pow(1.0 - ndv, 5.0);
 
             vec2 uv = vMirror.xy / vMirror.w + n.xz * 0.05;
+            // (hot spots are tamed so the spotlight reads as a soft sheen on black water, not glare)
             vec3 refl = texture2D(tMirror, uv).rgb;
+            refl = refl / (1.0 + max(max(refl.r, refl.g), refl.b) * 0.9);
 
             // looking into the water: deep blue, lit a little from the key light
             vec3 below = uWater * (0.55 + 0.45 * max(dot(n, uGlowDir), 0.0));
@@ -101,7 +103,7 @@ export default function WaterFloor({ shared }) {
 
             // sharp glints of the key light on the ripple crests
             vec3 h = normalize(uSun + v);
-            col += vec3(1.0) * pow(max(dot(n, h), 0.0), 420.0) * 2.2;
+            col += vec3(1.0, 0.9, 0.72) * pow(max(dot(n, h), 0.0), 420.0) * 0.9;
 
             // melt into the backdrop toward the horizon
             vec3 view = vWorld - uCam;

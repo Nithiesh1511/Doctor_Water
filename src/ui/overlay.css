@@ -911,3 +911,130 @@ body.is-revealed .section--hero > :nth-child(4) { animation-delay: 0.95s; }
     font-size: 12px;
   }
 }
+
+/* ================= Premium theme: midnight & champagne =================
+   Colours and finishes only (sizes live above). The dark studio carries the white type on
+   its own; champagne gold marks the accents, labels and calls to action. */
+:root {
+  --gold: #d8b878;
+  --gold-deep: #b48a4a;
+  --champagne: #f3e6c8;
+  --smoke: rgba(6, 12, 22, 0.58);
+  --gold-line: rgba(216, 184, 120, 0.32);
+}
+
+/* smoked-glass chips and panels with a fine gold edge */
+.eyebrow,
+.hero__tagline,
+.scroll-hint span,
+.section__text,
+.note-list,
+.nav__brand,
+.nav__cta,
+.pill,
+.stat,
+.contact-card {
+  background: var(--smoke);
+  border: 1px solid var(--gold-line);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.contact-card {
+  background: rgba(5, 10, 19, 0.74);
+}
+
+.eyebrow {
+  color: var(--gold);
+}
+.eyebrow::before {
+  background: var(--gold);
+}
+.nav__name i,
+.hero__tagline {
+  color: var(--champagne);
+}
+.nav__cta:hover {
+  background: rgba(216, 184, 120, 0.14);
+  border-color: var(--gold);
+}
+
+/* headline accents in champagne gold */
+.hero__word--top {
+  text-shadow: 0 10px 50px rgba(0, 0, 0, 0.55);
+}
+.hero__word--bottom {
+  background: linear-gradient(180deg, #fbf3df 0%, #e9cf98 45%, #b88d4c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.5));
+}
+.section__title .accent {
+  background: linear-gradient(120deg, #fbf1d8 5%, #e3c282 55%, #c29a57 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.45));
+}
+.section__title,
+.section__text,
+.hero__tagline {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* specs & contact */
+.stat__num {
+  background: linear-gradient(120deg, #f7e9c6, #c9a15c);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.stat__label {
+  color: rgba(243, 230, 200, 0.72);
+}
+.pill {
+  color: var(--champagne);
+}
+.contact-card .muted,
+.contact-row .k {
+  color: var(--gold);
+}
+.contact-row {
+  border-top-color: rgba(216, 184, 120, 0.16);
+}
+.note-list li::before {
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(216, 184, 120, 0.8);
+}
+.footnote {
+  color: rgba(216, 184, 120, 0.55);
+}
+
+/* calls to action: a gold primary, a gold-line ghost */
+.btn--primary {
+  background: linear-gradient(120deg, #f4ddaa 0%, #d8b878 45%, #b48a4a 100%);
+  color: #1a1206;
+  box-shadow: 0 14px 34px rgba(180, 138, 74, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+.btn--ghost {
+  background: rgba(6, 12, 22, 0.5);
+  border: 1px solid rgba(216, 184, 120, 0.5);
+  color: var(--champagne);
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+}
+
+/* chrome */
+.progress-rail {
+  background: rgba(216, 184, 120, 0.16);
+}
+.progress-rail span {
+  background: linear-gradient(180deg, #f4ddaa, #b48a4a);
+}
+.scroll-hint__mouse {
+  border-color: rgba(216, 184, 120, 0.6);
+}
+.scroll-hint__mouse::after {
+  background: var(--gold);
+}
+::selection {
+  background: var(--gold);
+  color: #1a1206;
+}

@@ -2,19 +2,21 @@ import * as THREE from 'three';
 
 /*
  * Studio backdrop shared by the sky dome and the water floor's horizon haze, so the two
- * meet without a seam. The look follows the reference shots: saturated cerulean edges and
- * a huge soft white key light behind the water, which is what makes clear water read as
- * silver lenses with dark rims.
+ * meet without a seam. Premium "midnight" set: a near-black navy studio with one soft cool
+ * spotlight pooled behind the product, a warm champagne haze on the horizon and a faint
+ * gold rim light — the classic luxury bottle shot, where the glass and water read through
+ * crisp highlights and glowing edges rather than a bright background.
  *
  * Uniform objects are shared (not cloned) between materials, so updating them once drives both.
  */
 export const BACKDROP_UNIFORMS = {
   uTime: { value: 0 },
   uGlowDir: { value: new THREE.Vector3(0.5, 0.18, -1).normalize() },
-  uDeep: { value: new THREE.Color('#073559') },
-  uMid: { value: new THREE.Color('#1a73aa') },
-  uLight: { value: new THREE.Color('#a6dcf6') },
-  uHot: { value: new THREE.Color('#f5fcff') },
+  uDeep: { value: new THREE.Color('#010307') },
+  uMid: { value: new THREE.Color('#071629') },
+  uLight: { value: new THREE.Color('#2a6e9e') },
+  uHot: { value: new THREE.Color('#cfe9ff') },
+  uGold: { value: new THREE.Color('#d9b87c') },
 };
 
 export const BACKDROP_GLSL = /* glsl */ `
@@ -24,19 +26,24 @@ export const BACKDROP_GLSL = /* glsl */ `
   uniform vec3 uMid;
   uniform vec3 uLight;
   uniform vec3 uHot;
+  uniform vec3 uGold;
 
   vec3 backdrop(vec3 d) {
     float h = max(d.y, 0.0);
-    vec3 col = mix(uMid, uDeep, smoothstep(0.04, 0.85, h));
+    // midnight: deep navy at the horizon falling to near-black overhead
+    vec3 col = mix(uMid, uDeep, smoothstep(0.0, 0.65, h));
     float g = max(dot(d, uGlowDir), 0.0);
-    // wide soft light, then a hot core
-    col = mix(col, uLight, pow(g, 4.0) * 0.9);
-    col = mix(col, uHot, pow(g, 18.0));
-    // bright haze hugging the horizon, strongest toward the light
-    col = mix(col, uLight, exp(-h * h * 70.0) * (0.25 + 0.55 * pow(g, 2.0)));
-    // slow caustic shimmer high up
+    // a soft cool spotlight pooled behind the product, with a gentle bright core
+    col += uLight * pow(g, 5.0) * 0.85;
+    col += uHot * pow(g, 36.0) * 0.4;
+    // warm champagne haze along the horizon, richest toward the spotlight
+    col += uGold * exp(-h * h * 90.0) * (0.05 + 0.16 * pow(g, 3.0));
+    // a faint gold rim light high on the left
+    float r = max(dot(d, normalize(vec3(-0.8, 0.55, -0.6))), 0.0);
+    col += uGold * pow(r, 12.0) * 0.16;
+    // slow caustic shimmer, barely there
     float band = sin(d.x * 9.0 + uTime * 0.2 + sin(d.y * 6.0 + uTime * 0.15) * 1.5);
-    col += uLight * 0.06 * smoothstep(0.7, 1.0, band) * smoothstep(0.05, 0.6, h);
+    col += uLight * 0.03 * smoothstep(0.75, 1.0, band) * smoothstep(0.05, 0.6, h);
     return col;
   }
 `;

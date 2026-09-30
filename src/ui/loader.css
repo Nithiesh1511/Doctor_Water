@@ -16,10 +16,12 @@
 .loader__panel {
   position: absolute;
   inset: 0;
+  /* midnight studio with a soft spotlight, matching the scene behind it */
   background:
-    radial-gradient(70% 60% at 50% 42%, #eef9ff 0%, rgba(166, 220, 246, 0.85) 32%, rgba(26, 115, 170, 0) 75%),
-    linear-gradient(180deg, #0a4675 0%, #1a73aa 60%, #3f95c7 100%);
-  background-color: #1a73aa;
+    radial-gradient(55% 50% at 50% 44%, rgba(42, 110, 158, 0.55) 0%, rgba(7, 22, 41, 0) 70%),
+    radial-gradient(90% 40% at 50% 100%, rgba(201, 161, 92, 0.16) 0%, rgba(201, 161, 92, 0) 70%),
+    linear-gradient(180deg, #010307 0%, #04101f 55%, #071629 100%);
+  background-color: #02060d;
   transition: transform 1.25s cubic-bezier(0.76, 0, 0.24, 1);
 }
 .loader__edge {
@@ -28,7 +30,7 @@
   top: 100%;
   width: 110%;
   height: 110px;
-  fill: #3f95c7;
+  fill: #071629;
   animation: edgeSway 2.4s ease-in-out infinite alternate;
 }
 @keyframes edgeSway {
@@ -78,7 +80,7 @@
 }
 .loader__rim {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.85);
+  stroke: #e3c58a; /* champagne-gold rim */
   stroke-width: 2.2;
 }
 .loader__shine {
@@ -152,7 +154,7 @@
   font-family: var(--display);
   font-weight: 800;
   font-size: 34px;
-  color: #0a2a5e;
+  color: #f3e6c8;
   font-variant-numeric: tabular-nums;
   letter-spacing: 1px;
 }
@@ -184,7 +186,7 @@
   font-weight: 500;
   letter-spacing: 7px;
   text-transform: uppercase;
-  color: #0a2a5e;
+  color: #d8b878;
   opacity: 0;
   animation: tagIn 1s ease 1s forwards;
 }

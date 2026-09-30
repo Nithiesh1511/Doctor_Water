@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { MeshTransmissionMaterial } from '@react-three/drei';
 import { CAN, CAN_SLICES, canLathePoints, canWaterPoints, canRadiusAt, tiltedLevel } from './profiles';
 import { makeLabelTexture } from './labelTexture';
-import { WATER_MATERIAL } from './physics';
+import { BEAD_MATERIAL } from './physics';
 import { hideFromRefraction, registerRefractionBuffer } from './refraction';
 
 export const CAN_SCALE = 0.8;
@@ -370,7 +370,7 @@ const Can = forwardRef(function Can({ shared }, ref) {
           {/* condensation beads */}
           <instancedMesh ref={beadsRef} args={[undefined, undefined, BEADS]} frustumCulled={false}>
             <sphereGeometry args={[1, 14, 10]} />
-            <meshPhysicalMaterial {...WATER_MATERIAL} thickness={0.04} />
+            <meshPhysicalMaterial {...BEAD_MATERIAL} />
           </instancedMesh>
 
           {/* screw cap */}
